@@ -67,7 +67,7 @@ foreign key(id_ingrediente) references ingredientes(id_ingrediente)
 
 create table pagamentos (
 id_pagamento int not null primary key auto_increment,
-metodo varchar (10) not null
+metodo varchar (30) not null
 );
 
 create table pedidos(
@@ -80,14 +80,3 @@ id_pagamento int not null,
 foreign key(id_cliente) references clientes(id_cliente),
 foreign key(id_pagamento) references pagamentos(id_pagamento)
 );
--- Inserir dados na tabela pagamentos
-INSERT INTO pagamentos (metodo) VALUES
-('Cartão de Crédito'),
-('Dinheiro'),
-('PIX');
-
--- Inserir dados na tabela pedidos
-INSERT INTO pedidos (valor_total, obs_pedido, id_cliente, id_pagamento) VALUES
-(25.5, 'Pedido normal', 1, 1),
-(32.0, 'Pedido urgente', 2, 2),
-(15.99, 'Pedido vegano', 1, 3);
