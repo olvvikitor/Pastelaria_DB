@@ -5,8 +5,8 @@ INSERT INTO clientes (nome, apelido, data_nascimento) VALUES
 
 -- Inserir dados na tabela enderecos
 INSERT INTO enderecos (bairro, logradouro, numero, cep, municipio, uf, id_cliente) VALUES
-('Centro', 'Rua Principal', '123', '12345678', 'Cidade1', 'UF1', 1),
-('Vila Alegre', 'Avenida Central', '456', '87654321', 'Cidade2', 'UF2', 2);
+('Centro', 'Rua Principal', '123', '12345678', 'Cidade1', 'BA', 1),
+('Vila Alegre', 'Avenida Central', '456', '87654321', 'Cidade2', 'SP', 2);
 
 -- Inserir dados na tabela contatos
 INSERT INTO contatos (email, telefone, id_cliente) VALUES
@@ -48,3 +48,16 @@ INSERT INTO pasteis (nome, preco, id_ingrediente, id_categoria_pastel) VALUES
 ('Pastel de Frango Vegano', 7.99, 3, 2), -- Vegano
 ('Pastel Sem Lactose', 8.99, 4, 4); -- Sem Lactose
 
+-- Inserir dados na tabela pagamentos
+INSERT INTO pagamentos (metodo) VALUES
+('Cartão de Crédito'),
+('Dinheiro'),
+('PIX');
+
+-- Inserir dados na tabela pedidos
+INSERT INTO pedidos (valor_total, obs_pedido, id_cliente, id_pagamento) VALUES
+(25.5, 'Pedido normal', 1, 1),
+(32.0, 'Pedido urgente', 2, 2),
+(15.99, 'Pedido vegano', 1, 3);
+
+select * from pedidos;
