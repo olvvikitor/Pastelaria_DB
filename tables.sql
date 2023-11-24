@@ -1,82 +1,116 @@
-drop database pastelaria_ming_moon;
-create database  pastelaria_ming_moon;
-use pastelaria_ming_moon;
 
-CREATE TABLE clientes (
-id_cliente int primary key auto_increment,
-nome varchar(255)  NOT NULL,
-apelido VARCHAR(100)  NOT NULL,
-data_nascimento DATE  NOT NULL,
-data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+DROP DATABASE IF EXISTS pastelaria_ming_moon;
+CREATE DATABASE pastelaria_ming_moon;
+USE pastelaria_ming_moon;
+
+-- Tabela de Clientes
+
+CREATE TABLE IF NOT EXISTS clientes (
+  idcliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  apelido VARCHAR(100) NOT NULL,
+  data_nascimento DATE NOT NULL,
+  data_cadastro TIMESTAMP NOT NULL
 );
 
-create table enderecos(
-id_endereco int primary key auto_increment,
-bairro VARCHAR(50) NOT NULL,
-logradouro VARCHAR(50) NOT NULL,
-numero VARCHAR(6) NOT NULL,
-cep VARCHAR(8) NULL,
-municipio VARCHAR(50) NOT NULL,
-uf CHAR(2) NOT NULL,
-id_cliente INT NOT NULL,
-foreign key(id_cliente) references clientes(id_cliente)
+-- Tabela de Endereços
+
+CREATE TABLE IF NOT EXISTS enderecos (
+  idendereco INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  bairro VARCHAR(50) NOT NULL,
+  logradouro VARCHAR(50) NOT NULL,
+  numero VARCHAR(6) NOT NULL,
+  cep VARCHAR(8) NOT NULL,
+  municipio VARCHAR(50) NOT NULL,
+  uf CHAR(2) NOT NULL,
+  id_cliente INT NOT NULL,
+  FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 );
 
-create table contatos(
-id_contato int primary key auto_increment,
-email VARCHAR(255) UNIQUE NOT NULL,
-telefone VARCHAR(20) UNIQUE NOT NULL,
-id_cliente int not null,
-foreign key(id_cliente) references clientes(id_cliente)
+-- Tabela de Contatos
+
+CREATE TABLE IF NOT EXISTS contatos (
+  idcontato INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  telefone VARCHAR(20) NOT NULL,
+  id_cliente INT NOT NULL,
+  UNIQUE INDEX email_UNIQUE (email),
+  UNIQUE INDEX telefone_UNIQUE (telefone),
+  FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 );
 
-create table categoria_produtos(
-id_categoria_prod int primary key not null,
-nome varchar(50) UNIQUE NOT NULL
+-- Tabela de Categoria de Produtos
+
+CREATE TABLE IF NOT EXISTS categoria_produtos (
+  idcategoria_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(50) NOT NULL,
+  UNIQUE INDEX nome_UNIQUE (nome)
+);
+-- Tabela de Pagamentos
+
+CREATE TABLE IF NOT EXISTS pagamentos (
+  idpagamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  metodo VARCHAR(10) NOT NULL
+);
+-- Tabela de Produtos
+
+CREATE TABLE IF NOT EXISTS produtos (
+  idproduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  validade_produto DATE NOT NULL,
+  quantidade DOUBLE NOT NULL,
+  id_categoria_prod INT NOT NULL,
+  UNIQUE INDEX nome_UNIQUE (nome),
+  FOREIGN KEY (id_categoria_prod) REFERENCES categoria_produtos (idcategoria_produto)
 );
 
-create table produtos(
-id_produto int auto_increment primary key not null,
-nome varchar(255) UNIQUE NOT NULL,
-validade_produto date NOT NULL,
-quantidade double NOT NULL,
-id_categoria_prod int not null,
-foreign key(id_categoria_prod) references categoria_produtos(id_categoria_prod)
-); 
+-- Tabela de Pedidos
 
-create table ingredientes(
-id_ingrediente int not null auto_increment primary key,
-nome varchar(100) NOT NULL,
-id_produto int not null,
-foreign key(id_produto) references produtos(id_produto)
-);
-create table categoria_pasteis(
-id_categoria_pastel int not null auto_increment primary key,
-nome varchar(20)
+CREATE TABLE IF NOT EXISTS pedidos (
+  idpedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  valor_total DOUBLE NOT NULL,
+  data_pedido TIMESTAMP NOT NULL,
+  obs_pedido VARCHAR(50) NOT NULL,
+  id_produto INT NOT NULL,
+  id_pagamento INT NOT NULL,
+  id_endereco INT NOT NULL,
+  id_cliente int not null,
+FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
+FOREIGN KEY (id_pagamento) REFERENCES pagamentos (idpagamento),
+FOREIGN KEY (id_endereco) REFERENCES enderecos (idendereco),
+FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 );
 
-create table pasteis(
-id_pastel int not null primary key auto_increment,
-nome varchar(200) UNIQUE NOT NULL,
-preco double NOT NULL,
-id_ingrediente int not null,
-id_categoria_pastel int not null,
-foreign key(id_categoria_pastel) references categoria_pasteis(id_categoria_pastel),
-foreign key(id_ingrediente) references ingredientes(id_ingrediente)
+-- Tabela de Ingredientes
+
+CREATE TABLE IF NOT EXISTS ingredientes (
+  idingrediente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL
 );
 
-create table pagamentos (
-id_pagamento int not null primary key auto_increment,
-metodo varchar (30) not null
+-- Tabela de Tamanhos
+
+CREATE TABLE IF NOT EXISTS tamanhos (
+  idtamanho INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  tamanho VARCHAR(15) NOT NULL
 );
 
-create table pedidos(
-id_pedido int not null primary key auto_increment,
-valor_total double not null,
-data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-obs_pedido varchar(50),
-id_cliente int not null,
-id_pagamento int not null,
-foreign key(id_cliente) references clientes(id_cliente),
-foreign key(id_pagamento) references pagamentos(id_pagamento)
+
+-- Tabela de Relacionamento entre Produtos e Ingredientes 
+
+CREATE TABLE IF NOT EXISTS ingredientes_de_produtos (
+  idproduto INT NOT NULL,
+  idingrediente INT NOT NULL,
+  FOREIGN KEY (idproduto) REFERENCES produtos (idproduto),
+  FOREIGN KEY (idingrediente) REFERENCES ingredientes (idingrediente)
+);
+
+-- Tabela de Relacionamento entre Produtos e Tamanhos
+
+CREATE TABLE IF NOT EXISTS tamanho_de_produtos (
+  idproduto INT NOT NULL,
+  idtamanho INT NOT NULL,
+  preco DOUBLE NOT NULL,
+  FOREIGN KEY (idproduto) REFERENCES produtos (idproduto),
+  FOREIGN KEY (idtamanho) REFERENCES tamanhos (idtamanho)
 );
