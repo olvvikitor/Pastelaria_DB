@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS pastelaria_ming_moon;
 CREATE DATABASE pastelaria_ming_moon;
 USE pastelaria_ming_moon;
@@ -9,6 +8,7 @@ CREATE TABLE IF NOT EXISTS clientes (
   idcliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   apelido VARCHAR(100) NOT NULL,
+  cpf VARCHAR(20) NOT NULL,
   data_nascimento DATE NOT NULL,
   data_cadastro TIMESTAMP NOT NULL
 );
