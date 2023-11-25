@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS categoria_produtos (
 
 CREATE TABLE IF NOT EXISTS pagamentos (
   idpagamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  metodo VARCHAR(10) NOT NULL
+  metodo VARCHAR(30) NOT NULL
 );
 -- Tabela de Produtos
 
@@ -68,12 +68,11 @@ CREATE TABLE IF NOT EXISTS produtos (
 CREATE TABLE IF NOT EXISTS pedidos (
   idpedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   valor_total DOUBLE NOT NULL,
-  data_pedido TIMESTAMP NOT NULL,
+  data_pedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   obs_pedido VARCHAR(50) NOT NULL,
   id_pagamento INT NOT NULL,
   id_endereco INT NOT NULL,
   id_cliente int not null,
-FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
 FOREIGN KEY (id_pagamento) REFERENCES pagamentos (idpagamento),
 FOREIGN KEY (id_endereco) REFERENCES enderecos (idendereco),
 FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
@@ -117,9 +116,11 @@ CREATE TABLE IF NOT EXISTS tamanho_de_produtos (
 CREATE TABLE IF NOT EXISTS itens_do_pedido (
   iditens_do_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   idpedido INT NOT NULL,
-  idproduto INT NOT NULL,
-  idtamanho INT NOT NULL,
+  id_produto INT NOT NULL,
+  id_tamanho INT NOT NULL,
   quantidade DOUBLE NOT NULL,
-  FOREIGN KEY (idpedido) REFERENCES pedidos (idpedido),
-  FOREIGN KEY (idtamanho) REFERENCES tamanhos (idtamanho)
+  preco_unitario varchar(50) NOT NULL,
+  FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
+  FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho) 
 );
+
