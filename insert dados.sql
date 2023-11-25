@@ -21,11 +21,11 @@ INSERT INTO categoria_produtos (id_categoria_prod, nome) VALUES
 (4, 'Doces');
 
 -- Inserir dados na tabela produtos
-INSERT INTO produtos (nome, validade_produto, quantidade, id_categoria_prod) VALUES
-('Nordestino', '2024-01-01', 10.5, 1),
-('Coca-cola', '2024-02-01', 25.0, 2),
-('Suco de Laranja', '2024-03-01', 20.0, 3),
-('Pudim', '2024-04-01', 7.0, 4);
+INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
+('Nordestino', '2024-01-01', 1),
+('Coca-cola', '2024-02-01', 2),
+('Suco de Laranja', '2024-03-01', 3),
+('Pudim', '2024-04-01', 4);
 
 -- Ligação entre produtos e os seus ingredientes
 INSERT INTO ingredientes_de_produtos (id_produto, id_ingredientes) VALUES
@@ -41,7 +41,7 @@ INSERT INTO ingredientes (nome) VALUES
 ('Sem Lactose'),
 ('Frango');
 
-INSERT INTO tamanho_de_produtos(id_produto, id_tamanho) VALUES
+INSERT INTO tamanho_de_produtos(id_produto, id_tamanho, preco) VALUES
 -- Maneira errada do insert, pois esta faltando uma (tabela itens_do_pedido) para informa o tamanho do pedido
 (1, 1), -- Nordestino(ADD =Pequeno)
 (1, 2), -- Nordestino(Pequeno, ADD = Medio)
@@ -65,7 +65,13 @@ INSERT INTO pagamentos (metodo) VALUES
 ('PIX');
 
 -- Inserir dados na tabela pedidos
-INSERT INTO pedidos (valor_total, obs_pedido, id_produto, id_pagamento, id_endereco, id_cliente) VALUES
+INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
 (25.5, 'Pedido normal', 1, 1, 1, 1), -- (1 - Nordestino, 1 - Cartao de credito, 1 - Rua Principal, 1 - Joao)
 (32.0, 'Pedido urgente', 2, 2, 2, 2), -- (2 - Coca-cola, 2 - Dinheiro, 2 - Avenida Central, 1 - Maria)
-(15.99, 'Pedido vegano', 4, 3, 1, 1); -- (1 - Pudim, 1 - Pix, 1 - Rua principal, 1 - Joao)
+(15.99, 'Pedido vegano', 4, 3, 1, 1); -- (1 - Pudim, 1 - Pix, 1 - Rua principal, 1 - Joao);
+
+INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade) VALUES
+(1, 1, 2, 2.0), -- 1 = pedido(1), 1 = Nordestino, 2 = medio, 2.0 = quantidade
+(2, 2, 5, 3.0), -- 2 = pedido(2), 2 = Coca-cola, 5 = 500ml, 3.0 = quantidade
+(3, 4, 1, 1.0); -- 3 = pedido(3), 4 = Pudim, 1 = pequeno, 1.0 = quantidade
+

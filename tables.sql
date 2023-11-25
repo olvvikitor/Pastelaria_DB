@@ -58,7 +58,6 @@ CREATE TABLE IF NOT EXISTS produtos (
   idproduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   validade_produto DATE NOT NULL,
-  quantidade DOUBLE NOT NULL,
   id_categoria_prod INT NOT NULL,
   UNIQUE INDEX nome_UNIQUE (nome),
   FOREIGN KEY (id_categoria_prod) REFERENCES categoria_produtos (idcategoria_produto)
@@ -71,7 +70,6 @@ CREATE TABLE IF NOT EXISTS pedidos (
   valor_total DOUBLE NOT NULL,
   data_pedido TIMESTAMP NOT NULL,
   obs_pedido VARCHAR(50) NOT NULL,
-  id_produto INT NOT NULL,
   id_pagamento INT NOT NULL,
   id_endereco INT NOT NULL,
   id_cliente int not null,
@@ -95,7 +93,6 @@ CREATE TABLE IF NOT EXISTS tamanhos (
   tamanho VARCHAR(15) NOT NULL
 );
 
-
 -- Tabela de Relacionamento entre Produtos e Ingredientes 
 
 CREATE TABLE IF NOT EXISTS ingredientes_de_produtos (
@@ -112,5 +109,17 @@ CREATE TABLE IF NOT EXISTS tamanho_de_produtos (
   idtamanho INT NOT NULL,
   preco DOUBLE NOT NULL,
   FOREIGN KEY (idproduto) REFERENCES produtos (idproduto),
+  FOREIGN KEY (idtamanho) REFERENCES tamanhos (idtamanho)
+);
+
+ -- Tabela de Relacionamento entre Pedidos e Tamanhos
+
+CREATE TABLE IF NOT EXISTS itens_do_pedido (
+  iditens_do_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  idpedido INT NOT NULL,
+  idproduto INT NOT NULL,
+  idtamanho INT NOT NULL,
+  quantidade DOUBLE NOT NULL,
+  FOREIGN KEY (idpedido) REFERENCES pedidos (idpedido),
   FOREIGN KEY (idtamanho) REFERENCES tamanhos (idtamanho)
 );
