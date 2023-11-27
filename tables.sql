@@ -81,7 +81,7 @@ FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 -- Tabela de Ingredientes
 
 CREATE TABLE IF NOT EXISTS ingredientes (
-  idingrediente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_ingrediente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100) NOT NULL
 );
 
@@ -92,14 +92,15 @@ CREATE TABLE IF NOT EXISTS tamanhos (
   tamanho VARCHAR(15) NOT NULL
 );
 
--- Tabela de Relacionamento entre Produtos e Ingredientes 
+-- Tabela de Relacionamento entre Produtos e Ingredientes  
 
 CREATE TABLE IF NOT EXISTS ingredientes_de_produtos (
-  idproduto INT NOT NULL,
-  idingrediente INT NOT NULL,
-  FOREIGN KEY (idproduto) REFERENCES produtos (idproduto),
-  FOREIGN KEY (idingrediente) REFERENCES ingredientes (idingrediente)
+  id_produto INT NOT NULL,
+  id_ingrediente INT NOT NULL,
+  FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
+  FOREIGN KEY (id_ingrediente) REFERENCES ingredientes (id_ingrediente)
 );
+
 
 -- Tabela de Relacionamento entre Produtos e Tamanhos
 
@@ -115,7 +116,7 @@ CREATE TABLE IF NOT EXISTS tamanho_de_produtos (
 
 CREATE TABLE IF NOT EXISTS itens_do_pedido (
   iditens_do_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  idpedido INT NOT NULL,
+  id_pedido INT NOT NULL,
   id_produto INT NOT NULL,
   id_tamanho INT NOT NULL,
   quantidade DOUBLE NOT NULL,
@@ -124,6 +125,3 @@ CREATE TABLE IF NOT EXISTS itens_do_pedido (
   FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho),
   FOREIGN KEY (id_pedido) REFERENCES pedidos (idpedido)
 );
-
-
-

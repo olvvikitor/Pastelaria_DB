@@ -30,7 +30,9 @@ INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
 ('Nordestino', '2024-01-01', 1),
 ('Coca-cola', '2024-02-01', 2),
 ('Suco de Laranja', '2024-03-01', 3),
-('Pudim', '2024-04-01', 4);
+('Pudim', '2024-04-01', 4),
+("Capim santo",'2024-04-01', 1),
+("Erva cidreira",'2024-04-01',1);
 select * from produtos;
 
 -- Inserir dados na tabela ingredientes
@@ -46,7 +48,11 @@ select * from ingredientes;
 -- Ligação entre produtos e os seus ingredientes
 INSERT INTO ingredientes_de_produtos (idproduto, idingrediente) VALUES
 (1, 2), -- Nordestino(ADD = Carne Seca)
-(1, 6); -- Nordestino(Carne Seca,ADD = Frango)
+(1, 6), -- Nordestino(Carne Seca,ADD = Frango)
+(5, 3), -- Capim santo(ADD = Brocolis)
+(5, 4), -- Capim santo(Brocolis, Add = vegano)
+(6, 3), -- Erva cidreira(ADD = Brocolis)
+(6, 4); -- Erva cidreira(Brocolis, Add = vegano)
 select * from ingredientes_de_produtos;
 
 INSERt INTO tamanhos (tamanho) VALUES
@@ -58,14 +64,16 @@ INSERt INTO tamanhos (tamanho) VALUES
 ('1L');
 select * from tamanhos;
 
-INSERT INTO tamanho_de_produtos(idproduto, idtamanho, preco) VALUES
+INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
 (1, 1, 5.00), -- Nordestino (Pequeno)
 (1, 2, 7.00), -- Nordestino (Médio)
 (1, 3, 10.00), -- Nordestino (Grande)
 (2, 4, 3.00), -- Coca-cola (200ml)
 (2, 5, 5.00), -- Coca-cola (500ml)
-(2, 6, 8.00); -- Coca-cola (1L)
-select * from tamanho_de_produtos;
+(2, 6, 8.00), -- Coca-cola (1L)
+(5, 1, 6.00), -- Pastel (Pequeno)
+(5, 3, 9.00), -- Pastel (Médio)
+(5, 4, 13.00); -- Pastel (Grande)
 
 -- Inserir dados na tabela pagamentos
 INSERT INTO pagamentos (metodo) VALUES
@@ -81,13 +89,12 @@ INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_clie
 (15.99, 'Pedido vegano', 3, 1, 1); -- (3 - Pix, 1 - Rua principal, 1 - Joao);
 select * from pedidos;
 
-INSERT INTO itens_do_pedido (idpedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
+INSERT INTO itens_do_pedido (id_pedido, id_produto, id_ingrediente, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
-(1, 1, 2, 2.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 1 AND id_tamanho = 2 LIMIT 1), 0.0))),
+(1, 1, 4, 2, 2.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 1 AND idtamanho = 2 LIMIT 1), 0.0))),
 -- Coca-cola (500ml)
-(2, 2, 5, 3.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 2 AND id_tamanho = 5 LIMIT 1), 0.0))),
+(2, 2, NULL, 5, 3.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 2 AND idtamanho = 5 LIMIT 1), 0.0))),
 -- Pudim (Pequeno)
-(3, 4, 1, 1.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 4 AND id_tamanho = 1 LIMIT 1), 0.0)));
-select * from itens_do_pedido;
+(3, 4, NULL, 1, 1.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 4 AND idtamanho = 1 LIMIT 1), 0.0)));
 
 
