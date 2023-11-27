@@ -121,6 +121,9 @@ CREATE TABLE IF NOT EXISTS itens_do_pedido (
   quantidade DOUBLE NOT NULL,
   preco_unitario varchar(50) NOT NULL,
   FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
-  FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho) 
+  FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho),
+  FOREIGN KEY (id_pedido) REFERENCES pedidos (idpedido)
 );
+
+
 
