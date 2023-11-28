@@ -87,12 +87,16 @@ INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_clie
 (25.5, 'Pedido normal', 1, 1, 1),
 (32.0, 'Pedido urgente', 2, 2, 2),
 (15.99, 'Pedido vegano', 3, 1, 1);
+
 -- Inserir dados na tabela itens_do_pedido
 INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
 (1, 1, 2, 2, 7.00),
+(1, 1, 2, 5, 7.00),
 -- Coca-cola (500ml)
 (2, 2, 5, 5, 5.00),
 -- Pudim (Pequeno)
 (3, 4, 1, 1, 6.00);
+
+
 
