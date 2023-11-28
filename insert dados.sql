@@ -1,63 +1,98 @@
 -- Inserir dados na tabela clientes
-INSERT INTO clientes (nome, apelido, data_nascimento) VALUES
-('João Silva', 'Joãozinho', '1985-03-15'),
-('Maria Oliveira', 'Mariazinha', '1992-09-22');
+INSERT INTO clientes (nome, apelido, cpf, data_nascimento, data_cadastro) VALUES
+('João Silva', 'Joãozinho', '123.456.789-10', '1985-03-15', CURRENT_TIMESTAMP),
+('Maria Oliveira', 'Mariazinha', '019.876.543-21', '1992-09-22', CURRENT_TIMESTAMP);
+select * from clientes;
+
 
 -- Inserir dados na tabela enderecos
 INSERT INTO enderecos (bairro, logradouro, numero, cep, municipio, uf, id_cliente) VALUES
-('Centro', 'Rua Principal', '123', '12345678', 'Cidade1', 'BA', 1),
+('Centro', 'Rua Principal', '123', '12', 'Cidade1', 'BA', 1),
 ('Vila Alegre', 'Avenida Central', '456', '87654321', 'Cidade2', 'SP', 2);
+select * from enderecos;
 
 -- Inserir dados na tabela contatos
 INSERT INTO contatos (email, telefone, id_cliente) VALUES
 ('joao.silva@email.com', '123456789', 1),
 ('maria.oliveira@email.com', '987654321', 2);
+select * from contatos;
 
 -- Inserir dados na tabela categoria_produtos
-INSERT INTO categoria_produtos (id_categoria_prod, nome) VALUES
-(1, 'Carnes'),
-(2, 'Vegetais'),
-(3, 'Refrigereantes'),
+INSERT INTO categoria_produtos (idcategoria_produto, nome) VALUES
+(1, 'Pasteis'),
+(2, 'Refrigereantes'),
+(3, 'Sucos'),
 (4, 'Doces');
+select * from categoria_produtos;
 
 -- Inserir dados na tabela produtos
-INSERT INTO produtos (nome, validade_produto, quantidade, id_categoria_prod) VALUES
-('Carne Bovina', '2023-01-01', 10.5, 1),
-('Brócolis', '2023-02-01', 15.0, 2),
-('Substituto de Carne Vegana', '2023-03-01', 20.0, 3),
-('Leite Sem Lactose', '2023-04-01', 5.0, 4);
+INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
+('Nordestino', '2024-01-01', 1),
+('Coca-cola', '2024-02-01', 2),
+('Suco de Laranja', '2024-03-01', 3),
+('Pudim', '2024-04-01', 4),
+("Capim santo",'2024-04-01', 1),
+("Erva cidreira",'2024-04-01',1);
+select * from produtos;
 
 -- Inserir dados na tabela ingredientes
-INSERT INTO ingredientes (nome, id_produto) VALUES
-('Ingrediente Carne', 1),
-('Ingrediente Brócolis', 2),
-('Ingrediente Vegano', 3),
-('Ingrediente Sem Lactose', 4);
-
--- Inserir dados na tabela categoria_pasteis
-INSERT INTO categoria_pasteis (nome) VALUES
-('Normal'),
+INSERT INTO ingredientes (nome) VALUES
+('Carne'),
+('Carne Seca'),
+('Brócolis'),
 ('Vegano'),
-('Vegetariano'),
-('Sem Lactose');
+('Sem Lactose'),
+('Frango');
+select * from ingredientes;
 
--- Inserir dados na tabela pasteis
-INSERT INTO pasteis (nome, preco, id_ingrediente, id_categoria_pastel) VALUES
-('Pastel de Carne', 5.99, 1, 1), -- Normal
-('Pastel de Legumes', 6.99, 2, 3), -- Vegetariano
-('Pastel de Frango Vegano', 7.99, 3, 2), -- Vegano
-('Pastel Sem Lactose', 8.99, 4, 4); -- Sem Lactose
+-- Ligação entre produtos e os seus ingredientes
+INSERT INTO ingredientes_de_produtos (id_produto, id_ingrediente) VALUES
+(1, 2), -- Nordestino(ADD = Carne Seca)
+(1, 6), -- Nordestino(Carne Seca,ADD = Frango)
+(5, 3), -- Capim santo(ADD = Brocolis)
+(5, 4), -- Capim santo(Brocolis, Add = vegano)
+(6, 3), -- Erva cidreira(ADD = Brocolis)
+(6, 4); -- Erva cidreira(Brocolis, Add = vegano)
 
+select * from ingredientes_de_produtos;
+
+INSERt INTO tamanhos (tamanho) VALUES
+('Pequeno'),
+('Medio'),
+('Grande'),
+('200ml'),
+('500ml'),
+('1L');
+select * from tamanhos;
+
+INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
+(1, 1, 5.00), -- Nordestino (Pequeno)
+(1, 2, 7.00), -- Nordestino (Médio)
+(1, 3, 10.00), -- Nordestino (Grande)
+(2, 4, 3.00), -- Coca-cola (200ml)
+(2, 5, 5.00), -- Coca-cola (500ml)
+(2, 6, 8.00), -- Coca-cola (1L)
+(5, 1, 6.00), -- Pastel (Pequeno)
+(5, 3, 9.00), -- Pastel (Médio)
+(5, 4, 13.00); -- Pastel (Grande)
+select * from tamanho_de_produtos;
 -- Inserir dados na tabela pagamentos
 INSERT INTO pagamentos (metodo) VALUES
 ('Cartão de Crédito'),
 ('Dinheiro'),
 ('PIX');
-
+select * from pagamentos;
 -- Inserir dados na tabela pedidos
-INSERT INTO pedidos (valor_total, obs_pedido, id_cliente, id_pagamento) VALUES
-(25.5, 'Pedido normal', 1, 1),
-(32.0, 'Pedido urgente', 2, 2),
-(15.99, 'Pedido vegano', 1, 3);
+INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
+(25.5, 'Pedido normal', 1, 1, 1),
+(32.0, 'Pedido urgente', 2, 2, 2),
+(15.99, 'Pedido vegano', 3, 1, 1);
+-- Inserir dados na tabela itens_do_pedido
+INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
+-- Nordestino (Médio)
+(1, 1, 2, 2, 7.00),
+-- Coca-cola (500ml)
+(2, 2, 5, 5, 5.00),
+-- Pudim (Pequeno)
+(3, 4, 1, 1, 6.00);
 
-select * from pedidos;
