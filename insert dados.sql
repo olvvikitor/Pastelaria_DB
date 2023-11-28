@@ -7,7 +7,7 @@ select * from clientes;
 
 -- Inserir dados na tabela enderecos
 INSERT INTO enderecos (bairro, logradouro, numero, cep, municipio, uf, id_cliente) VALUES
-('Centro', 'Rua Principal', '123', '12345678', 'Cidade1', 'BA', 1),
+('Centro', 'Rua Principal', '123', '12', 'Cidade1', 'BA', 1),
 ('Vila Alegre', 'Avenida Central', '456', '87654321', 'Cidade2', 'SP', 2);
 select * from enderecos;
 
@@ -46,13 +46,14 @@ INSERT INTO ingredientes (nome) VALUES
 select * from ingredientes;
 
 -- Ligação entre produtos e os seus ingredientes
-INSERT INTO ingredientes_de_produtos (idproduto, idingrediente) VALUES
+INSERT INTO ingredientes_de_produtos (id_produto, id_ingrediente) VALUES
 (1, 2), -- Nordestino(ADD = Carne Seca)
 (1, 6), -- Nordestino(Carne Seca,ADD = Frango)
 (5, 3), -- Capim santo(ADD = Brocolis)
 (5, 4), -- Capim santo(Brocolis, Add = vegano)
 (6, 3), -- Erva cidreira(ADD = Brocolis)
 (6, 4); -- Erva cidreira(Brocolis, Add = vegano)
+
 select * from ingredientes_de_produtos;
 
 INSERt INTO tamanhos (tamanho) VALUES
@@ -74,27 +75,24 @@ INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
 (5, 1, 6.00), -- Pastel (Pequeno)
 (5, 3, 9.00), -- Pastel (Médio)
 (5, 4, 13.00); -- Pastel (Grande)
-
+select * from tamanho_de_produtos;
 -- Inserir dados na tabela pagamentos
 INSERT INTO pagamentos (metodo) VALUES
 ('Cartão de Crédito'),
 ('Dinheiro'),
 ('PIX');
 select * from pagamentos;
-
 -- Inserir dados na tabela pedidos
 INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
-(25.5, 'Pedido normal', 1, 1, 1), --  (1 - Cartao de credito, 1 - Rua Principal, 1 - Joao)
-(32.0, 'Pedido urgente', 2, 2, 2), -- (2 - Dinheiro, 2 - Avenida Central, 1 - Maria)
-(15.99, 'Pedido vegano', 3, 1, 1); -- (3 - Pix, 1 - Rua principal, 1 - Joao);
-select * from pedidos;
-
-INSERT INTO itens_do_pedido (id_pedido, id_produto, id_ingrediente, id_tamanho, quantidade, preco_unitario) VALUES
+(25.5, 'Pedido normal', 1, 1, 1),
+(32.0, 'Pedido urgente', 2, 2, 2),
+(15.99, 'Pedido vegano', 3, 1, 1);
+-- Inserir dados na tabela itens_do_pedido
+INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
-(1, 1, 4, 2, 2.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 1 AND idtamanho = 2 LIMIT 1), 0.0))),
+(1, 1, 2, 2, 7.00),
 -- Coca-cola (500ml)
-(2, 2, NULL, 5, 3.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 2 AND idtamanho = 5 LIMIT 1), 0.0))),
+(2, 2, 5, 5, 5.00),
 -- Pudim (Pequeno)
-(3, 4, NULL, 1, 1.0, CONCAT('R$', COALESCE((SELECT preco FROM tamanho_de_produtos WHERE id_produto = 4 AND idtamanho = 1 LIMIT 1), 0.0)));
-
+(3, 4, 1, 1, 6.00);
 
