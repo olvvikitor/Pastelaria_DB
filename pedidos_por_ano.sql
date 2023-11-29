@@ -1,15 +1,27 @@
-DROP VIEW pedidos_por_cliente_mes;
-CREATE VIEW pedidos_por_cliente_mes AS
-SELECT
-    MONTH(data_pedido) AS mes,
-    YEAR(data_pedido) AS ano,
-    id_cliente,
-    COUNT(*) AS total_pedidos
-FROM pedidos
-WHERE YEAR(data_pedido) = 2023  -- Substitua 2023 pelo ano desejado
-GROUP BY ano, mes, id_cliente
-ORDER BY total_pedidos DESC
-LIMIT 1; -- Mostrar apenas o cliente com a maior quantidade de pedidos
+DELIMITER //
 
+CREATE PROCEDURE PedidosPorClienteMes(IN ano_desejado INT)
+BEGIN
+    SELECT
+        MONTH(p.data_pedido) AS mes,
+        YEAR(p.data_pedido) AS ano,
+        c.idcliente,
+        c.nome,
+        c.data_nascimento,
+        COUNT(p.idpedido) AS total_pedidos
+    FROM 
+        pedidos p
+    INNER JOIN
+        clientes c ON p.id_cliente = c.idcliente
+    WHERE 
+        YEAR(p.data_pedido) = ano_desejado
+    GROUP BY 
+        ano, mes, p.id_cliente, c.nome, c.data_nascimento
+    ORDER BY 
+        total_pedidos DESC
+    LIMIT 1;
+END //
 
-select * from pedidos_por_cliente_mes;
+DELIMITER ;
+
+CALL PedidosPorClienteMes(2023);
