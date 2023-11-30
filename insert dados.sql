@@ -209,4 +209,4 @@ INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, prec
 
 (10, 13, 3, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 3)),
 (10, 14, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 14 AND idtamanho = 3));
-
+select * from pedidos;
