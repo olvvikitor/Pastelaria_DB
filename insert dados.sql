@@ -46,7 +46,8 @@ INSERT INTO categoria_produtos (idcategoria_produto, nome) VALUES
 (1, 'Pasteis'),
 (2, 'Refrigereantes'),
 (3, 'Sucos'),
-(4, 'Doces');
+(4, 'Doces'),
+(5,'Pasteis Veganos');
 select * from categoria_produtos;
 
 -- Inserir dados na tabela produtos
@@ -55,7 +56,7 @@ INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
 ('Coca-cola', '2024-02-01', 2),
 ('Suco de Laranja', '2024-03-01', 3),
 ('Pudim', '2024-04-01', 4),
-("Capim santo",'2024-04-01', 1),
+("Capim santo",'2024-04-01', 5),
 ('Cachorro diferente', '2024-05-01', 1),
 ('Pepsi', '2024-06-01', 2),
 ('Suco de Limão', '2024-07-01', 3),
@@ -63,54 +64,55 @@ INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
 ('Delícia Paulista', '2024-09-01', 1),
 ('Queijo Maravilha', '2024-10-01', 1),
 ('Frango da Alegria', '2024-11-01', 1),
-('Rei Banana', '2024-12-01', 1),
-("Mario faminto",'2024-04-01',1);
+('Rei Banana', '2024-12-01', 5),
+("Mario faminto",'2024-04-01',5);
 select * from produtos;
 
 -- Inserir dados na tabela ingredientes
-INSERT INTO ingredientes (nome) VALUES
-('Carne'), 
-('Carne Seca'),
-('Brócolis'),
-('Vegano'),
-('Sem Lactose'),
-('Frango'),
-('Queijo'),
-('Presunto'),
-('Tomate'),
-('Molho Barbecue'),
-('Calabresa'),
-('Catupiry'),
-('Milho'),
-('Banana'),
-('Morango'),
-('Bacon'),
-('Cogumelo vermelho');
+INSERT INTO ingredientes (nome, estoque) VALUES
+('Carne', 100.0), 
+('Carne Seca', 100.0),
+('Brócolis', 100.0),
+('Vegano', 100),
+('Sem Lactose', 100.0),
+('Frango', 100.0),
+('Queijo', 100.0),
+('Presunto', 100.0),
+('Tomate', 100.0),
+('Molho Barbecue', 100.0),
+('Calabresa', 100.0),
+('Catupiry', 100.0),
+('Milho', 100.0),
+('Banana', 100.0),
+('Morango', 100.0),
+('Bacon', 100.0),
+('Cogumelo vermelho', 100.0);
 select * from ingredientes;
 
 -- Ligação entre produtos e os seus ingredientes
-INSERT INTO ingredientes_de_produtos (id_produto, id_ingrediente) VALUES
-(1, 2), -- Nordestino(ADD = Carne Seca)
-(1, 6), -- Nordestino(Carne Seca,ADD = Frango)
-(5, 3), -- Capim santo(ADD = Brocolis)
-(5, 4), -- Capim santo(Brocolis, Add = vegano)
-(6, 8), -- Cachorro diferente(ADD = Presunto)
-(6, 11), -- Cachorro diferente(Presunto, ADD = Calabresa)
-(6, 12), -- Cachorro diferente(Presunto, Calabresa, ADD = Catupiry)
-(10, 7), -- Delícia Paulista(ADD = Queijo)
-(10, 16), -- Delícia Paulista(Queijo, ADD = Bacon)
-(10, 10), -- Delícia Paulista(Queijo, Bacon, ADD = Molho Barbecue)
-(11, 7), -- Queijo Maravilha(ADD = Queijo)
-(11, 8), -- Queijo Maravilha(Queijo, ADD = Presunto)
-(11, 12), -- Queijo Maravilha(Queijo, Presunto, ADD = Catupiry)
-(11, 13), -- Queijo Maravilha(Queijo, Presunto, Catupiry, ADD = Milho)
-(12, 6), -- Frango da Alegria(ADD = Frango)
-(12, 2), -- Frango da Alegria(Frango, ADD = Carne Seca)
-(12, 11), -- Frango da Alegria(Frango, Carne Seca, ADD = Calabresa)
-(13, 9), -- Rei Banana(ADD = Tomate)
-(13, 14), -- Rei Banana(Tomate, ADD = Banana)
-(14,17),-- Mario faminto(ADD = Cogumelo vermelho)
-(14,9); -- Mario faminto(Cogumelo vermelho, add = tomate)
+INSERT INTO ingredientes_de_produtos (id_produto, id_ingrediente, qtd_ingrediente) VALUES
+(1, 2, 1.0), -- Nordestino (ADD = Carne Seca)
+(1, 6, 1.0),  -- Nordestino (Carne Seca, ADD = Frango)
+(5, 3, 1.0), -- Capim santo (ADD = Brócolis)
+(5, 4, 1.0), -- Capim santo (Brócolis, Add = Vegano)
+(6, 8, 1.0), -- Cachorro diferente (ADD = Presunto)
+(6, 11, 1.0),-- Cachorro diferente (Presunto, ADD = Calabresa)
+(6, 12, 1.0),-- Cachorro diferente (Presunto, Calabresa, ADD = Catupiry)
+(10, 7, 1.0),-- Delícia Paulista (ADD = Queijo)
+(10, 16, 1.0),-- Delícia Paulista (Queijo, ADD = Bacon)
+(10, 10, 1.0),-- Delícia Paulista (Queijo, Bacon, ADD = Molho Barbecue)
+(11, 7, 1.0),-- Queijo Maravilha (ADD = Queijo)
+(11, 8, 1.0),-- Queijo Maravilha (Queijo, ADD = Presunto)
+(11, 12, 1.0),-- Queijo Maravilha (Queijo, Presunto, ADD = Catupiry)
+(11, 13, 1.0),-- Queijo Maravilha (Queijo, Presunto, Catupiry, ADD = Milho)
+(12, 6, 1.0),-- Frango da Alegria (ADD = Frango)
+(12, 2, 1.0),-- Frango da Alegria (Frango, ADD = Carne Seca)
+(12, 11, 1.0),-- Frango da Alegria (Frango, Carne Seca, ADD = Calabresa)
+(13, 9, 1.0),-- Rei Banana (ADD = Tomate)
+(13, 14, 1.0),-- Rei Banana (Tomate, ADD = Banana)
+(14, 17, 1.0),-- Mario faminto (ADD = Cogumelo vermelho)
+(14, 9, 1.0),-- Mario faminto (Cogumelo vermelho, ADD = Tomate)
+(14, 4, 1.0);-- Mario faminto (Cogumelo vermelho, ADD = Tomate)
 
 select * from ingredientes_de_produtos;
 
@@ -122,23 +124,22 @@ INSERt INTO tamanhos (tamanho) VALUES
 ('500ml'),
 ('1L');
 select * from tamanhos;
-
 INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
-(1, 1, 5.00), -- Nordestino (Pequeno)
-(1, 2, 7.00), -- Nordestino (Médio)
-(1, 3, 10.00), -- Nordestino (Grande)
-(2, 4, 3.00), -- Coca-cola (200ml)
-(2, 5, 5.00), -- Coca-cola (500ml)
-(2, 6, 8.00), -- Coca-cola (1L)
-(5, 1, 6.00), -- Capim santo (Pequeno)
-(5, 2, 9.00), -- Capim santo (Médio)
-(5, 3, 13.00), -- Capim santo (Grande)
-(6, 1, 4.00), -- Cachorro Diferente(Pequeno)
-(6, 2, 6.00), -- Cachorro Diferente(Medio)
-(6, 3, 7.00), -- Cachorro Diferente(Grande)
-(10, 1, 6.50), -- Delícia Paulista(Pequeno)
-(10, 2, 7.50), -- Delícia Paulista(Medio)
-(10, 3, 8.50), -- Delícia Paulista(Grande)
+(1, 1, 5.99), -- Nordestino (Pequeno)
+(1, 2, 7.99), -- Nordestino (Médio)
+(1, 3, 10.99), -- Nordestino (Grande)
+(2, 4, 3.99), -- Coca-cola (200ml)
+(2, 5, 5.99), -- Coca-cola (500ml)
+(2, 6, 8.99), -- Coca-cola (1L)
+(5, 1, 6.99), -- Capim santo (Pequeno)
+(5, 2, 9.99), -- Capim santo (Médio)
+(5, 3, 13.99), -- Capim santo (Grande)
+(6, 1, 4.99), -- Cachorro Diferente(Pequeno)
+(6, 2, 6.99), -- Cachorro Diferente(Medio)
+(6, 3, 7.99), -- Cachorro Diferente(Grande)
+(10, 1, 6.99), -- Delícia Paulista(Pequeno)
+(10, 2, 7.99), -- Delícia Paulista(Medio)
+(10, 3, 8.99), -- Delícia Paulista(Grande)
 (11, 1, 4.99), -- Queijo Maravilha(Pequeno)
 (11, 2, 6.99), -- Queijo Maravilha(Medio)
 (11, 3, 7.99), -- Queijo Maravilha(Grande)
@@ -147,9 +148,12 @@ INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
 (12, 3, 7.99), -- Frango da Alegria(Grande)
 (13, 1, 4.99), -- Rei Banana(Pequeno)
 (13, 2, 6.99), -- Rei Banana(Medio)
-(14 ,1, 7.99),  -- Mario faminto(pequeno)
-(14 ,2, 7.99),  -- Mario faminto(medio)
-(14 ,3, 7.99);  -- Mario faminto(grande)
+(14, 1, 7.99), -- Mario faminto(Pequeno)
+(14, 2, 10.99), -- Mario faminto(Medio)
+(14, 3, 16.99),-- Mario faminto(Grande)
+(4, 2, 11.99), -- pudim(Medio)
+(4, 3, 14.99); -- pudim(Grande)
+
 select * from tamanho_de_produtos;
 
 -- Inserir dados na tabela pagamentos
@@ -161,40 +165,48 @@ INSERT INTO pagamentos (metodo) VALUES
 
 
 -- Inserir dados na tabela pedidos
-INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
-(0, 'Pedido normal', 1, 1, 1),
-(0, 'Pedido urgente', 2, 2, 2),
-(0, 'Pedido rapido', 3, 1, 1),
-(0, 'Pedido especial', 4, 3, 3),
-(0, 'Pedido festivo', 3, 4, 4),
-(0, 'Pedido surpresa', 2, 2, 2),
-(0, 'Pedido tranquilo', 1, 5, 5),
-(0, 'Pedido único', 3, 6, 6),
-(0, 'Pedido misterioso', 1, 7, 7),
-(0, 'Pedido especial', 4, 3, 1);
+INSERT INTO pedidos (obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
+('Pedido normal', 1, 1, 1),
+('Pedido urgente', 2, 2, 2),
+('Pedido rapido', 3, 1, 1),
+('Pedido especial', 4, 3, 3),
+('Pedido festivo', 3, 4, 4),
+('Pedido surpresa', 2, 2, 2),
+('Pedido tranquilo', 1, 5, 5),
+('Pedido único', 3, 6, 6),
+('Pedido misterioso', 1, 7, 7),
+('Pedido especial', 4, 3, 1);
 -- Inserir dados na tabela itens_do_pedido
 INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
-(1, 1, 2, 2, 7.00),
-(1, 1, 2, 5, 7.00),
+(1, 1, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
+(1, 1, 2, 5, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
 -- Coca-cola (500ml)
-(2, 2, 5, 5, 5.00),
+(1, 2, 5, 5, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
 -- Pudim (Pequeno)
-(3, 4, 1, 1, 6.00),
+-- Nordestino (Médio)
+(2, 1, 2, 3, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
+(2, 1, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
+-- Coca-cola (500ml)
+(2, 2, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
+-- Pudim (Pequeno)
+(3, 4, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 4 AND idtamanho = 2)),
 -- Capim santo(Grande)
-(4, 5, 3, 3, 13.00),
-(4, 5, 5, 2, 5.00),
+(4, 5, 3, 3, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 5 AND idtamanho = 3)),
+(4, 5, 5, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 5 AND idtamanho = 5)),
 -- Cachorro diferente(Pequeno, Medio)
-(5, 6, 1, 1, 4.00),
-(5, 6, 2, 2, 6.00),
+(5, 6, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 6 AND idtamanho = 1)),
+(5, 6, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 6 AND idtamanho = 2)),
 -- Delicia Paulista(Grande)
-(6, 10, 3, 4, 8.50),
+(6, 10, 3, 4, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 10 AND idtamanho = 3)),
 -- Queijo Maravilha(Medio)
-(7, 11, 2, 1, 6.99),
+(7, 11, 2, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 11 AND idtamanho = 2)),
 -- Frango da Alegria
-(8, 12, 1, 2, 4.99),
+(8, 12, 1, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 12 AND idtamanho = 1)),
 -- Rei Banana
-(9, 13, 3, 4, 7.99),
-(9, 13, 3, 2, 7.99);
+(9, 13, 3, 4, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 3)),
+(9, 12, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 12 AND idtamanho = 3)),
 
-select * from pedidos;
+(10, 13, 3, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 3)),
+(10, 14, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 14 AND idtamanho = 3));
+

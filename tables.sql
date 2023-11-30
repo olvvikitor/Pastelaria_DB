@@ -84,6 +84,7 @@ FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 
 CREATE TABLE IF NOT EXISTS ingredientes (
   id_ingrediente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   estoque double,
   nome VARCHAR(100) NOT NULL
 );
 
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS tamanhos (
 CREATE TABLE IF NOT EXISTS ingredientes_de_produtos (
   id_produto INT NOT NULL,
   id_ingrediente INT NOT NULL,
+  qtd_ingrediente double,
   PRIMARY KEY (id_produto, id_ingrediente),
   FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
   FOREIGN KEY (id_ingrediente) REFERENCES ingredientes (id_ingrediente)
@@ -147,5 +149,35 @@ BEGIN
     SET valor_total = total_pedido
     WHERE idpedido = NEW.id_pedido;
 END //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER reduzir_estoque
+AFTER INSERT ON ingredientes_de_produtos
+FOR EACH ROW
+BEGIN
+    DECLARE quantidade_em_estoque DOUBLE;
 
+    -- Obter a quantidade atual em estoque
+    SELECT estoque INTO quantidade_em_estoque
+    FROM ingredientes
+    WHERE id_ingrediente = NEW.id_ingrediente;
+
+    -- Verificar se há estoque suficiente
+    IF quantidade_em_estoque >= NEW.qtd_ingrediente THEN
+        -- Reduzir a quantidade em estoque
+        UPDATE ingredientes
+        SET estoque = quantidade_em_estoque - NEW.qtd_ingrediente
+        WHERE id_ingrediente = NEW.id_ingrediente;
+    ELSE
+        -- Tratar a situação em que não há estoque suficiente
+        -- Definir o estoque como zero, por exemplo
+        UPDATE ingredientes
+        SET estoque = 0
+        WHERE id_ingrediente = NEW.id_ingrediente;
+        
+        -- Você pode emitir um aviso ou fazer outra ação aqui
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Estoque insuficiente para o ingrediente';
+    END IF;
+END //
 DELIMITER ;
