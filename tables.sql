@@ -84,6 +84,7 @@ FOREIGN KEY (id_cliente) REFERENCES clientes (idcliente)
 
 CREATE TABLE IF NOT EXISTS ingredientes (
   id_ingrediente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   estoque double,
   nome VARCHAR(100) NOT NULL
 );
 
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS tamanhos (
 CREATE TABLE IF NOT EXISTS ingredientes_de_produtos (
   id_produto INT NOT NULL,
   id_ingrediente INT NOT NULL,
+  qtd_ingrediente double,
   PRIMARY KEY (id_produto, id_ingrediente),
   FOREIGN KEY (id_produto) REFERENCES produtos (idproduto),
   FOREIGN KEY (id_ingrediente) REFERENCES ingredientes (id_ingrediente)
@@ -128,3 +130,4 @@ CREATE TABLE IF NOT EXISTS itens_do_pedido (
   FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho),
   FOREIGN KEY (id_pedido) REFERENCES pedidos (idpedido)
 );
+
