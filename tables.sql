@@ -128,3 +128,24 @@ CREATE TABLE IF NOT EXISTS itens_do_pedido (
   FOREIGN KEY (id_tamanho) REFERENCES tamanho_de_produtos (idtamanho),
   FOREIGN KEY (id_pedido) REFERENCES pedidos (idpedido)
 );
+
+-- gatilho para calcular valor total do pedido
+DELIMITER //
+CREATE TRIGGER calcular_valor_total
+AFTER INSERT ON itens_do_pedido
+FOR EACH ROW
+BEGIN
+    DECLARE total_pedido DOUBLE;
+
+    -- Calcular o valor total do pedido
+    SELECT SUM(quantidade * preco_unitario) INTO total_pedido
+    FROM itens_do_pedido
+    WHERE id_pedido = NEW.id_pedido;
+
+    -- Atualizar o valor total na tabela de pedidos
+    UPDATE pedidos
+    SET valor_total = total_pedido
+    WHERE idpedido = NEW.id_pedido;
+END //
+
+DELIMITER ;

@@ -1,3 +1,4 @@
+
 -- Inserir dados na tabela clientes
 INSERT INTO clientes (nome, apelido, cpf, data_nascimento, data_cadastro) VALUES
 ('João Silva', 'Joãozinho', '123.456.789-10', '1985-03-15', CURRENT_TIMESTAMP),
@@ -62,7 +63,8 @@ INSERT INTO produtos (nome, validade_produto, id_categoria_prod) VALUES
 ('Delícia Paulista', '2024-09-01', 1),
 ('Queijo Maravilha', '2024-10-01', 1),
 ('Frango da Alegria', '2024-11-01', 1),
-('Rei Banana', '2024-12-01', 1);
+('Rei Banana', '2024-12-01', 1),
+("Mario faminto",'2024-04-01',1);
 select * from produtos;
 
 -- Inserir dados na tabela ingredientes
@@ -82,7 +84,8 @@ INSERT INTO ingredientes (nome) VALUES
 ('Milho'),
 ('Banana'),
 ('Morango'),
-('Bacon');
+('Bacon'),
+('Cogumelo vermelho');
 select * from ingredientes;
 
 -- Ligação entre produtos e os seus ingredientes
@@ -106,7 +109,8 @@ INSERT INTO ingredientes_de_produtos (id_produto, id_ingrediente) VALUES
 (12, 11), -- Frango da Alegria(Frango, Carne Seca, ADD = Calabresa)
 (13, 9), -- Rei Banana(ADD = Tomate)
 (13, 14), -- Rei Banana(Tomate, ADD = Banana)
-(13, 15); -- Rei Banana(Tomate, Banana, ADD = Morango)
+(14,17),-- Mario faminto(ADD = Cogumelo vermelho)
+(14,9); -- Mario faminto(Cogumelo vermelho, add = tomate)
 
 select * from ingredientes_de_produtos;
 
@@ -143,7 +147,9 @@ INSERT INTO tamanho_de_produtos (idproduto, idtamanho, preco) VALUES
 (12, 3, 7.99), -- Frango da Alegria(Grande)
 (13, 1, 4.99), -- Rei Banana(Pequeno)
 (13, 2, 6.99), -- Rei Banana(Medio)
-(13, 3, 7.99); -- Rei Banana(Grande)
+(14 ,1, 7.99),  -- Mario faminto(pequeno)
+(14 ,2, 7.99),  -- Mario faminto(medio)
+(14 ,3, 7.99);  -- Mario faminto(grande)
 select * from tamanho_de_produtos;
 
 -- Inserir dados na tabela pagamentos
@@ -152,21 +158,20 @@ INSERT INTO pagamentos (metodo) VALUES
 ('Dinheiro'),
 ('PIX'),
 ('Cartão de Debito');
-select * from pagamentos;
+
 
 -- Inserir dados na tabela pedidos
 INSERT INTO pedidos (valor_total, obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
-(25.5, 'Pedido normal', 1, 1, 1),
-(32.0, 'Pedido urgente', 2, 2, 2),
-(15.99, 'Pedido rapido', 3, 1, 1),
-(18.75, 'Pedido especial', 4, 3, 3),
-(22.5, 'Pedido festivo', 3, 4, 4),
-(12.99, 'Pedido surpresa', 2, 2, 2),
-(27.0, 'Pedido tranquilo', 1, 5, 5),
-(35.5, 'Pedido único', 3, 6, 6),
-(19.99, 'Pedido misterioso', 1, 7, 7);
-select * from pedidos;
-
+(0, 'Pedido normal', 1, 1, 1),
+(0, 'Pedido urgente', 2, 2, 2),
+(0, 'Pedido rapido', 3, 1, 1),
+(0, 'Pedido especial', 4, 3, 3),
+(0, 'Pedido festivo', 3, 4, 4),
+(0, 'Pedido surpresa', 2, 2, 2),
+(0, 'Pedido tranquilo', 1, 5, 5),
+(0, 'Pedido único', 3, 6, 6),
+(0, 'Pedido misterioso', 1, 7, 7),
+(0, 'Pedido especial', 4, 3, 1);
 -- Inserir dados na tabela itens_do_pedido
 INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
@@ -189,4 +194,7 @@ INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, prec
 -- Frango da Alegria
 (8, 12, 1, 2, 4.99),
 -- Rei Banana
-(9, 13, 3, 4, 7.99);
+(9, 13, 3, 4, 7.99),
+(9, 13, 3, 2, 7.99);
+
+select * from pedidos;
