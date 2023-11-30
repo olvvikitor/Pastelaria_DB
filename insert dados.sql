@@ -180,20 +180,19 @@ INSERT INTO pedidos (obs_pedido, id_pagamento, id_endereco, id_cliente) VALUES
 INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, preco_unitario) VALUES
 -- Nordestino (Médio)
 (1, 1, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
-(1, 1, 2, 5, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
+(1, 1, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
 -- Coca-cola (500ml)
-(1, 2, 5, 5, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
+(1, 2, 5, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
 -- Pudim (Pequeno)
 -- Nordestino (Médio)
 (2, 1, 2, 3, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
 (2, 1, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 1 AND idtamanho = 2)),
--- Coca-cola (500ml)
-(2, 2, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
+(2, 2, 5, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 2 AND idtamanho = 5)),
 -- Pudim (Pequeno)
 (3, 4, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 4 AND idtamanho = 2)),
 -- Capim santo(Grande)
 (4, 5, 3, 3, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 5 AND idtamanho = 3)),
-(4, 5, 5, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 5 AND idtamanho = 5)),
+(4, 5, 5, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 5 AND idtamanho = 1)),
 -- Cachorro diferente(Pequeno, Medio)
 (5, 6, 1, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 6 AND idtamanho = 1)),
 (5, 6, 2, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 6 AND idtamanho = 2)),
@@ -204,9 +203,9 @@ INSERT INTO itens_do_pedido (id_pedido, id_produto, id_tamanho, quantidade, prec
 -- Frango da Alegria
 (8, 12, 1, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 12 AND idtamanho = 1)),
 -- Rei Banana
-(9, 13, 3, 4, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 3)),
-(9, 12, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 12 AND idtamanho = 3)),
-
+(9, 13, 3, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 2)),
+(9, 12, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 12 AND idtamanho = 1)),
+-- Mario 
 (10, 13, 3, 1, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 13 AND idtamanho = 3)),
 (10, 14, 3, 2, (SELECT preco FROM tamanho_de_produtos WHERE idproduto = 14 AND idtamanho = 3));
 select * from pedidos;

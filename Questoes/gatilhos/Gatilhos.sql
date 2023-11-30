@@ -39,12 +39,13 @@ BEGIN
         UPDATE ingredientes
         SET estoque = 0
         WHERE id_ingrediente = NEW.id_ingrediente;
-        SET MESSAGE_TEXT = 'Estoque insuficiente para o ingrediente';
+    
     END IF;
 END //
 DELIMITER ;
 -- Gatilho para impedir o método de pagamento "Dinheiro" se o valor total for maior que 50
 DELIMITER //
+
 CREATE TRIGGER impedir_pagamento_dinheiro
 BEFORE INSERT ON pedidos
 FOR EACH ROW
@@ -58,8 +59,8 @@ BEGIN
 
     -- Verificar se o valor total é maior que 50
     IF total_pedido > 50.0 AND NEW.id_pagamento = (SELECT idpagamento FROM pagamentos WHERE metodo = 'Dinheiro') THEN
-     set idpagamento = 1;
-        SET MESSAGE_TEXT = 'O método de pagamento "Dinheiro" não é permitido para pedidos com valor total superior a 50.';
+        SET NEW.id_pagamento = (SELECT idpagamento FROM pagamentos WHERE metodo = 'PIX');
     END IF;
 END //
+
 DELIMITER ;
